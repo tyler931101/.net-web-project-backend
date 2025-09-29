@@ -1,0 +1,33 @@
+# Build artifacts
+bin/
+obj/
+
+# Entity Framework / local DB
+*.db
+*.sqlite
+*.mdf
+*.ldf
+
+# IDE / User-specific
+.vs/
+.vscode/
+*.user
+*.suo
+*.sln.docstates
+
+# Logs & temp
+*.log
+*.tmp
+*.bak
+
+# ASP.NET generated
+wwwroot/*.gz
+wwwroot/*.br
+wwwroot/*.bundle.js
+wwwroot/*.min.css
+
+# Secrets & config
+appsettings.Development.json
+appsettings.Local.json
+.env
+.env.*

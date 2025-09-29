@@ -1,0 +1,24 @@
+# Build folders
+bin/
+obj/
+
+# User-specific & IDE
+.vs/
+.vscode/
+*.user
+*.suo
+*.sln.docstates
+
+# Logs & temp
+*.log
+*.tmp
+
+# Database files
+*.db
+
+# Secrets
+appsettings.Development.json
+
+# OS-specific
+[Dd]esktop.ini
+[Tt]humbs.db
