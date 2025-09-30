@@ -1,3 +1,4 @@
+using System.Reflection.Metadata;
 using backend.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -81,7 +82,7 @@ namespace backend.Services
             var token = GenerateJwtToken(user);
             _logger.LogInformation($"Login successful for email: {model.Email}");
 
-            return new AuthResult(true, token);
+            return new AuthResult(true, token, user.Id);
         }
 
         private string GenerateJwtToken(ApplicationUser user)

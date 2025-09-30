@@ -1,2 +1,5 @@
 dotnet ef migrations add InitialCreate
 dotnet ef database update
+
+netstat -ano | findstr 5294
+taskkill /PID 20536 /F
