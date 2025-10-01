@@ -14,28 +14,41 @@ namespace backend.Services
         }
 
         public async Task<List<TicketModel>> GetTicketsAsync()
-            => await _context.Tickets
-                .Include(t => t.Performer)  // ✅ bring in related user
+        {
+            var tickets = await _context.Tickets
+                .Include(t => t.Performer)
                 .ToListAsync();
 
+            // 🚀 now safely map PerformerName in memory
+            foreach (var t in tickets)
+            {
+                t.PerformerName = t.Performer?.UserName ?? string.Empty;
+                t.Performer = null; // optional: prevent IdentityUser serialization
+            }
+
+            return tickets;
+        }
+
         public async Task<TicketModel?> GetTicketByIdAsync(string id)
-            => await _context.Tickets
-                .Include(t => t.Performer)  // ✅ bring in related user
+        {
+            var ticket = await _context.Tickets
+                .Include(t => t.Performer)
                 .FirstOrDefaultAsync(t => t.Id == id);
 
+            if (ticket != null)
+            {
+                ticket.PerformerName = ticket.Performer?.UserName ?? string.Empty;
+                ticket.Performer = null; // optional
+            }
+
+            return ticket;
+        }
         public async Task<TicketModel> CreateTicketAsync(TicketModel ticket)
         {
             ticket.Id = Guid.NewGuid().ToString();
             _context.Tickets.Add(ticket);
 
-            var rows = await _context.SaveChangesAsync();
-
-            Console.WriteLine($"[DEBUG] Rows saved: {rows}");
-            Console.WriteLine($"[DEBUG] DB path: {_context.Database.GetDbConnection().DataSource}");
-
-            var count = await _context.Tickets.CountAsync();
-            Console.WriteLine($"[DEBUG] Total tickets in DB: {count}");
-
+            await _context.SaveChangesAsync();
             return ticket;
         }
 

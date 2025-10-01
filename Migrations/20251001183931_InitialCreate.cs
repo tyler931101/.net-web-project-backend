@@ -52,23 +52,6 @@ namespace backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tickets",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "TEXT", nullable: false),
-                    Title = table.Column<string>(type: "TEXT", nullable: false),
-                    Content = table.Column<string>(type: "TEXT", nullable: false),
-                    PerformerId = table.Column<string>(type: "TEXT", nullable: false),
-                    ExpireDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Weight = table.Column<int>(type: "INTEGER", nullable: false),
-                    Zone = table.Column<string>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tickets", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -174,6 +157,29 @@ namespace backend.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Tickets",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "TEXT", nullable: false),
+                    Title = table.Column<string>(type: "TEXT", nullable: false),
+                    Content = table.Column<string>(type: "TEXT", nullable: false),
+                    PerformerId = table.Column<string>(type: "TEXT", nullable: false),
+                    ExpireDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Weight = table.Column<int>(type: "INTEGER", nullable: false),
+                    Zone = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tickets", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tickets_AspNetUsers_PerformerId",
+                        column: x => x.PerformerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -210,6 +216,11 @@ namespace backend.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tickets_PerformerId",
+                table: "Tickets",
+                column: "PerformerId");
         }
 
         /// <inheritdoc />

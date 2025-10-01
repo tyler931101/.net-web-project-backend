@@ -20,5 +20,7 @@ namespace backend.Models
         public DateTime ExpireDate { get; set; }
         public int Weight { get; set; }
         public string Zone { get; set; } = "Todo"; // Zone (Todo, Review, Testing, Done)
+        [NotMapped] 
+        public string PerformerName { get; set; } = string.Empty; // ✅ populated in service
     }
 }

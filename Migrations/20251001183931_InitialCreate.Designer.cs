@@ -11,7 +11,7 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251001164334_InitialCreate")]
+    [Migration("20251001183931_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -244,6 +244,8 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PerformerId");
+
                     b.ToTable("Tickets");
                 });
 
@@ -296,6 +298,17 @@ namespace backend.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("backend.Models.TicketModel", b =>
+                {
+                    b.HasOne("backend.Models.ApplicationUser", "Performer")
+                        .WithMany()
+                        .HasForeignKey("PerformerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Performer");
                 });
 #pragma warning restore 612, 618
         }
