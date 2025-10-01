@@ -17,7 +17,7 @@ namespace backend.Controllers
 
         // GET: api/user
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserModel>>> GetAll()
+        public async Task<ActionResult<IEnumerable<ApplicationUser>>> GetAll()
         {
             var users = await _userService.GetUsersAsync();
             return Ok(users);
@@ -25,7 +25,7 @@ namespace backend.Controllers
 
         // GET: api/user/{id}
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserModel>> GetById(string id)
+        public async Task<ActionResult<ApplicationUser>> GetById(string id)
         {
             var user = await _userService.GetUserByIdAsync(id);
             if (user == null)

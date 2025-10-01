@@ -4,6 +4,7 @@ namespace backend.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        // You can add custom properties to your user model here if needed.
+        // This will NOT go into DB (used only for API binding)
+        public string? Password { get; set; }
     }
 }

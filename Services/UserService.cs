@@ -13,15 +13,15 @@ namespace backend.Services
             _context = context;
         }
 
-        public async Task<List<UserModel>> GetUsersAsync()
+        public async Task<List<ApplicationUser>> GetUsersAsync()
         {
             try
             {
                 return await _context.Users
-                    .Select(u => new UserModel
+                    .Select(u => new ApplicationUser
                     {
                         Id = u.Id,
-                        Name = u.UserName,
+                        UserName = u.UserName,
                     })
                     .ToListAsync();
             }
@@ -32,14 +32,14 @@ namespace backend.Services
             }
         }
 
-        public async Task<UserModel?> GetUserByIdAsync(string id)
+        public async Task<ApplicationUser?> GetUserByIdAsync(string id)
         {
             return await _context.Users
                 .Where(u => u.Id == id)
-                .Select(u => new UserModel
+                .Select(u => new ApplicationUser
                 {
                     Id = u.Id,
-                    Name = u.UserName!,
+                    UserName = u.UserName!,
                 })
                 .FirstOrDefaultAsync();
         }

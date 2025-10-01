@@ -14,10 +14,14 @@ namespace backend.Services
         }
 
         public async Task<List<TicketModel>> GetTicketsAsync()
-            => await _context.Tickets.ToListAsync();
+            => await _context.Tickets
+                .Include(t => t.Performer)  // ✅ bring in related user
+                .ToListAsync();
 
         public async Task<TicketModel?> GetTicketByIdAsync(string id)
-            => await _context.Tickets.FirstOrDefaultAsync(t => t.Id == id);
+            => await _context.Tickets
+                .Include(t => t.Performer)  // ✅ bring in related user
+                .FirstOrDefaultAsync(t => t.Id == id);
 
         public async Task<TicketModel> CreateTicketAsync(TicketModel ticket)
         {

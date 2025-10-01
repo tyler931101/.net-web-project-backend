@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
@@ -16,27 +16,17 @@ namespace backend.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterModel model)
+        public async Task<IActionResult> Register([FromBody] ApplicationUser user)
         {
-            var result = await _authService.RegisterAsync(model);
-            if (result.IsSuccess)
-            {
-                return Ok(result);
-            }
-
-            return BadRequest(result);
+            var result = await _authService.RegisterAsync(user);
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginModel model)
+        public async Task<IActionResult> Login([FromBody] ApplicationUser user)
         {
-            var result = await _authService.LoginAsync(model);
-            if (result.IsSuccess)
-            {
-                return Ok(result);
-            }
-
-            return Unauthorized(result);
+            var result = await _authService.LoginAsync(user);
+            return result.IsSuccess ? Ok(result) : Unauthorized(result);
         }
     }
 }

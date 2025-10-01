@@ -11,7 +11,7 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250930203442_InitialCreate")]
+    [Migration("20251001164334_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -179,6 +179,9 @@ namespace backend.Migrations
 
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Password")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("PasswordHash")
